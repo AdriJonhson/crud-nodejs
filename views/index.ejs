@@ -1,0 +1,41 @@
+<%- contentFor('body') %>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Título</th>
+			<th>Preço</th>
+			<th>Etiqueta</th>
+			<th>Ativo</th>
+			<th>Editar</th>
+			<th>Excluir</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<% for(product of products){ %>
+		<tr>
+			<td><%= product.title %></td>
+			<td>R$ <%= product.price %></td>
+			<td><%= product.slug %></td>
+			<td><%= product.active ? "Sim" : "Não" %></td>
+			<td>
+				<a class="btn btn-primary" href="editar-produto/<%= product._id %>">Editar</a>
+			</td>
+			<td>
+				<form method="POST" action="/excluir">
+						<input type="hidden" name="_id" value="<%= product._id %>">
+						<input type="hidden" name="_method" value="DELETE">
+						<button class="btn btn-danger" onclick="return confirm('Deseja realmente remover esse produto?')">Excluir</button>
+				</form>
+			</td>
+		</tr>
+		<% } %>
+	</tbody>
+	
+	<tfoot>
+		<tr>
+			<td colspan="6" align="center"><a href="/novo-produto">Novo Produto</a></td>
+		</tr>
+	</tfoot>
+</table>
